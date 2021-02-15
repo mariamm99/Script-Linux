@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#Descripción:	Uso de variables locales
+#		Generalmente variables en mayuscula.
+
+NOMBRE=Manuel
+NUMERO=5
+NOMBRE_COMPLETO=" Manuel Garcia López "
+
+echo -n "El valor de la primera variables es "
+echo $NOMBRE
+
+echo -n "El valor de la variable es diferente "
+echo $Nombre
+
+echo -n "La variables Numero es "
+echo $NUMERO
+
+CARPETA=/etc/network
+ls -ld $CARPETA
+cat $CARPETA/interfaces
+
+
+#Las variables por defecto son cadenas 
+NUMERO2=4
+NUMERO3=$NUMERO+$NUMERO2
+
+echo "El resultado de NUMERO+NUMERO2 es $NUMERO3"

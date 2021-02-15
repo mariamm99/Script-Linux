@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#Descripción: Lectura de valores de varialbes desde teclado"
+
+echo -n "Introduce un nombre de directorio: "
+read CARPETA
+
+echo "La carpeta es $CARPETA"
+
+#En el mismocomandoread puedo documentar la entrada
+read -p "INtroduce otro directorio " CARPETA2
+echo "la nueva carpeta es  $CARPETA2"
+
+echo "la segunda carpeta ocupa "
+du -sh $CARPETA2
+
+
+exit 0

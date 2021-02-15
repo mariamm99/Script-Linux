@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Descripción:	Script que muestra la fecha de l sistema y hace un listado 
+#		de la carpeta personal del usuario
+
+echo " La fecha del sistema actual es "
+date
+
+echo " El contenido de la careta personal es " 
+ls ~
+
+#multiples no usa comillas porque es una palabra sola.
+
+echo -n "Esto es"
+echo -n "una cadena con "
+echo -n multiples
+echo  -n "lineas que se muestran juntas"
+pwd
+
+
+exit 0
+

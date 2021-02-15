@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#Descripcion:	Uso de los parametros de posición
+
+echo "primer argumento del script $1"
+echo "2º argumento del script $2"
+echo "3º argumento del script $3"
+echo "4º argumento del script $4"
+echo "5º argumento del script $5"
+echo "6º argumento del script $6"
+echo "7º argumento del script $7"
+echo "8º argumento del script $8"
+echo "9º argumento del script $9"
+echo "10º parametro posicional del script $10"
+echo "10º parametro posicional del script ${10}"
+
+NOMBRE=" José" 
+APELLIDOS="Pérez García"
+
+echo "El nombre completo es $NOMBRE_$APELLIDOS"
+echo "El nombre completo es ${NOMBRE}_${APELLIDOS}"
+
+# 1="Nuevo valor del parametro"  No se pueden cambiar los parametros son de solo lectura 
+
+# Uso de desplazamiento para cambiar el valor de los parametros posicionales
+echo "El primer parametro es $1";
+shift 
+echo "El primer parametro es $1";
+shift 
+echo "El primer parametro es $1";

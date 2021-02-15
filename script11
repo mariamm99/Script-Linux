@@ -1,0 +1,41 @@
+#!/bin/bash
+
+#dESCRIPCION : expresiones aritméticas
+let N1=8
+let N2=7
+let N3=$N1*$N2
+
+echo "N1 es $N1"
+echo "N2 es $N2"
+echo "N3 es $N3"
+
+let N4=$N1/$N2
+echo "N4 es $N4"
+
+let RESTO=$N1%$N2
+echo "el resto es $RESTO"
+
+#let N5=++{$N1}*3/{$N2}--
+#echo "N5 es $N5"
+
+
+let N5=N1++*3/--N2
+echo "N5 es $N5"
+
+let A=5
+let B=A+3*9
+echo "B=$B"
+
+let C=B/A+3
+echo "C=$C"
+
+
+let A+=C--
+#+= indica que a c-- le sumemos a
+echo "A=$A"
+echo "C=$C"
+
+let COCIENTE=B/C,RESTO=B%C
+echo "El cociente es $COCIENTE y el resto es $RESTO"
+
+

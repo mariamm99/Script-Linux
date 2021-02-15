@@ -1,0 +1,71 @@
+#!/bin/bash
+# Descripción:	bucle select. Escribir un escript que pide una opción de los siguientes.
+#		-Tamaño			-Fecha de modificación
+#		-Permisos en octal	-fecha de creación
+#		-tipo de fichero	-Fin
+#		-Propietario
+#	Según la opción elegida muestra esa info de un fichero que se da por teclado
+
+PS3="información de fichero. eliga la opción ->"
+select OPCION in tamaño permisos 'tipo de fichero' propietario 'fecha modificacion' 'fecha creacion' fin ; do
+
+echo "La opción elegida es $OPCION"
+
+if [ "$OPCION" = "fin" ]; then
+	break;
+fi
+
+if [ "$OPCION" = "tamaño" ] || [ "$OPCION" = "permisos" ] || [ "$OPCION" = "tipo de fichero" ] || [ "$OPCION" = "propietario" ] || [ "$OPCION" = "fecha de modificacion" ] || [ "$OPCION" = "fecha de creacion" ] ||[ "$OPCION" = "fin" ]; then
+
+read -p "introduzca el archivo " ARCHIVO
+	if [ ! -f "$ARCHIVO" ]; then
+		echo " el archivo no existe"
+	else
+
+
+	if [ -f $ARCHIVO ]; then
+		case $OPCION in
+
+		"tamaño")
+			echo -n "el tamaño del archivo es"
+			stat -c %s $ARCHIVO
+		;;
+
+		"permisos")
+			echo -n "Los permisos del archivo son"
+			stat -c %A  $ARCHIVO
+		;;
+
+		"tipo de fichero")
+			echo -n "El tipo de fichero es "
+			stat -c %F $ARCHIVO
+		;;
+
+		"propietario")
+			echo -n " propietario es "
+			stat -c %U $ARCHIVO
+		;;
+
+		"fecha modificacion")
+			echo -n " la fecha de modificación es"
+			stat -c %y $ARCHIVO
+		;;
+
+		"fecha de creacion")
+			echo -n " fecha de creación es "
+			stat -c %w $ARCHIVO
+		;;
+		"fin")
+			echo -n " final del bucle select"
+			break
+		;;
+		esac
+	fi
+	fi
+
+fi
+
+done
+
+exit 0
+

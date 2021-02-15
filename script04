@@ -1,0 +1,16 @@
+#!/bin/bash
+
+export VBLE_EXP1="Primera variable de entorno"
+
+echo "La primera variable de entorno se ha exportado"
+
+export VBLE_EXP2="Segunda variable de entorno"
+
+echo "comienza la ejecución del escript05" 
+
+./script05
+
+echo " Se ha ejecutado script05" 
+
+
+VBLE_EXP3="Variable sin valor"

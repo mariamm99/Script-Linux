@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Descripción:	ejemplo del uso de los bucles while y until.
+#	Script que recibe parametros que son directorios y muestra tamaño
+#	Rellenear array con estos directorios y visualizar al final
+
+declare -a DIRECTORIOS
+declare -i I=0
+
+if [ $# -eq 0 ]; then 
+	echo "Error de sintaxis faltan los parametros."
+	echo "Sintaxis: $0 <directorio>... "
+fi
+
+NUM_PARAMETROS=$#
+
+while [ $1 ] ; do
+	if [ -d $1 ]; then
+		du -sh $1 2>/dev/null
+		 DIRECTORIO[I++]=$1
+	else
+		echo "$1 no es un directorio"
+	fi
+	shift
+done
+
+echo " se han terminado de procesar los parametros"
+
+let I=0
+
+until [ -z ${DIRECTORIO[I]} ] ; do
+echo " el elemento siguiente es ${DIRECTORIO[I]}"
+let ++I
+done
+
+
+
+
+exit 0
+

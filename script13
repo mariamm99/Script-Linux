@@ -1,0 +1,44 @@
+#!/bin/bash
+
+#DESCRIPCION = condicional simple, permisos d eficheros
+
+FICHERO=/etc/network/interfaces
+
+
+if [ -r $FICHERO ]; then
+	echo " EL fichero $FICHERO tiene permiso de lectura"
+	cat $FICHERO
+else
+	echo " El fichero $FICHERO no tiene permiso de lectura"
+fi
+
+
+echo "operadores logicos"
+echo "------------------"
+#los 2 primeros if son iguales
+#if [ -e $FICHERO ] && [ -r $FICHERO ]; then
+#if test -e $FICHERO && test -r $FICHERO; then
+if [ -e $FICHERO -a -r $FICHERO ]; then
+	echo " EL fichero $FICHERO existe y tiene permiso de lectura"
+fi
+
+if  [ -w $FICHERO ]; then
+	echo " EL fichero $FICHERO se puede modificar o borrar"
+else
+	echo "el fichero $FICHERO  es solo de lectura"
+fi
+
+
+FICHERO=/sbin/fdisk
+if  [ -x $FICHERO ]; then
+	echo " EL fichero $FICHERO es ejecutable"
+	$FICHERO -l /dev/sda
+	$FICHERO --help
+fi
+
+DIRECTORIO=$HOME
+if [ -x $DIRECTORIO ]; then
+	echo "Puedo cambiarme al directorio $DIRECTORIO"
+	cd $DIRECTORIO
+	ls -l
+fi

@@ -1,0 +1,140 @@
+#!/bin/bash
+
+# Descripción:	Ejemplo de uso de:
+#			-valores por defecto
+#			-subcadenas
+#			-busqueda y sustitución de cadena
+
+#Escribir un script que recibe parámetros un nombre de archivo/directorio y un nombre de usuario
+#	-si no se pasa el primer parámetro el valor por defecto es la carpeta personal del usuario q ejecuta el script
+#	-Si no pasa el segundo parámetro el valor por defecto es el usaurio que ejecuta el script
+
+#El script debe visualizar que operaciones puede realizar el usuario sobre el archivo
+
+#1. Valor por defecto
+#${VAR-VALOR}	Utiliza Valor si var no está definida
+#${VAR:-VALOR}	Utilizar VALOR si VAR no esta definida o es nula
+#${VAR=VALOR}	Asigna valor a var si no esta definida
+#${VAR:=VALOR}	asigna VALOR si VAR no esta definida o es nula
+
+echo "valor del parametro 1: $1"
+echo "valor del parametro 2: $2"
+
+echo "valor por defecto del par 1: ${1-$HOME}"
+echo "valor por defecto del par 2: ${1-`whoami`}"
+
+echo "la expansión con - no asigna valor, solo utiliza el valor por defecto"
+echo "valor 1 $1"
+echo "valor 2 $2"
+
+#no se les puede asignar valor pq son parametros de solo lectura.
+echo "valor por defecto del par 1: ${1:-$HOME}"
+echo "valor por defecto del par 2: ${1:-`whoami`}"
+echo "valor 1 $1"
+echo "valor 2 $2"
+
+DIRECTORIO=$1
+USUARIO=$2
+echo "asinamos valores por defecto"
+echo "valor por defecto del par 1: ${1:-$HOME}"
+echo "valor por defecto del par 2: ${1:-`whoami`}"
+
+echo "valor directorio $DIRECTORIO"
+echo "valor user $USUARIO"
+
+
+echo "asinamos valores por defecto"
+echo "valor por defecto del par 1: ${DIRECTORIO:=$HOME}"
+echo "valor por defecto del par 2: ${USUARIO:=`whoami`}"
+
+echo "valor directorio $DIRECTORIO"
+echo "valor user $USUARIO"
+
+echo "--------------------subcadenas--------------------"
+#subcadenas
+#{VAR:POS} extrae una subcadena que comienza en pos y llega al final
+#{VAR:POS:LEN} extrae una subcadena que comienza en pos y tiene LEN de longitud
+
+PERMISOS=`stat -c %A $DIRECTORIO`
+echo " La mascara de permisos es  $PERMISOS"
+
+case ${PERMISOS:0:1} in
+	"d")
+		echo "$DIRECTORIO es un direcotrio"
+	;;
+	"d")
+		echo "$DIRECTORIO es un direcotrio"
+	;;
+	"-")
+		echo "$DIRECTORIO es un archivo regular"
+	;;
+	"l")
+		echo "$DIRECTORIO es un enlace simbólico"
+	;;
+	"b")
+		echo "$DIRECTORIO es un dispositivo por bloques"
+	;;
+
+	"c")
+		echo "$DIRECTORIO es un dispositivo por caracteres"
+	;;
+	"s")
+		echo "$DIRECTORIO es un socket"
+	;;
+	"*")
+		echo "$DIRECTORIO es algo indeterminado"
+	;;
+esac
+
+ID_PROP=`stat -c %u $DIRECTORIO`
+ID_GRUP=`stat -c %g $DIRECTORIO`
+
+echo "Identificador de usuario es ${ID_PROP} y grupo ${ID_GRUP}"
+PROPIETARIO=`cat /etc/passwd | grep :${ID_PROP}: | cut -d: -f1`
+GRUPO=`cat /etc/group | grep :${ID_GRUP}: | cut -d: -f1`
+echo "Propietario es $PROPIETARIO Y grupo es $GRUPO"
+
+
+if [ "$PROPIETARIO" = "$USUARIO" ]; then
+	echo "el usuario $USUARIO es el propietario de $DIRECTORIO"
+	echo -n "los permisos del usuario son "
+	echo ${PERMISOS:1:3}
+else
+	GRUPOS=`id -Gn $USUARIO | grep $GRUPO`
+#EL #GRUPO es para coger la longitud
+		if [ ${#GRUPOS} -gt 0 ]; then
+			echo "El usuario $USUARIO es miembro del grupo $GRUPO"
+			echo "LOs permisos para $USUARIO son: "
+			echo ${PERMISOS:4:3}
+		else
+			echo "El usuario $USUARIO no es propietario ni miembro del grupo $GRUPO"
+			echo "Los permisos para $USUARIO son: "
+			echo ${PERMISOS:7}
+		fi
+fi
+
+echo "-----------busqueda y reemplazo-------------"
+#{var/a/b}
+#{var//a/b}
+
+if [ "$PROPIETARIO" = "$USUARIO" ]; then
+	MASCARA=${PERMISOS:1:3}
+else
+	GRUPOS=`id -Gn $USUARIO | grep $GRUPO`
+
+		if [ ${#GRUPOS} -gt 0 ]; then
+			MASCARA=${PERMISOS:4:3}
+		else
+			MASCARA=${PERMISOS:7}
+		fi
+fi
+MASCARA=${MASCARA/r/'lectura: si '}
+MASCARA=${MASCARA/w/'Escritura: si '}
+MASCARA=${MASCARA/x/'Ejecucion: si '}
+echo $MASCARA
+
+
+
+
+exit 0
+

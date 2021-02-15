@@ -1,0 +1,92 @@
+#!/bin/bash
+# Descripción:	Ejemplo del bucle for
+
+#1º forma bucle for. Estilo C
+
+for (( INDICE=1; INDICE < 10; INDICE++ )) do
+	echo "el valor de la variable contardor es $INDICE"
+	echo "El tamaño del fichero script0$INDICE es"
+	stat -c %s script0$INDICE 2> /dev/null
+done
+
+echo "fin del bucle for en estilo c"
+echo "-----------------------------------------"
+
+#1º forma bucle for. Estilo C para recorrer un array 
+USUARIOS=(usuario administrador root operador user)
+
+LONG_ARRAY=${#USUARIOS[@]}
+echo "longitud array ${LONG_ARRAY}"
+
+for (( INDICE=0; INDICE < ${LONG_ARRAY}; INDICE++ )) do
+echo "El elemento $INDICE del array es ${USUARIOS[$INDICE]}"
+done
+
+echo " Fin del segunde bucle for estilo C"
+echo "-----------------------------------------"
+
+#2 forma el bucle for. Uso de listas
+for NUMERO in {1..10}; do
+	echo "el siguiente numero es $NUMERO"
+done
+
+echo "Fin bucle con lista de numeros"
+echo "-----------------------------------------"
+
+#USO DE UNA LISTA CONSTANTE NÚMERICA CON EL COMANDO seq
+
+for NUMERO in $(seq 1 10); do
+	echo "el siguiente numero es $NUMERO"
+done
+
+echo "-----------------------------------------"
+
+read -p "Introduce el extremo inferior: " INFERIOR
+read -p "Introduce el extremo superior: " SUPERIOR
+
+for NUMERO in $(seq $INFERIOR $SUPERIOR) ; do
+	echo "El siguiente numero es $NUMERO"
+done
+
+echo "-----------------------------------------"
+
+#USO DE EXPANSIÓN DE NOMBRE DE FICHERO
+#visualzamos el tamaño de los ficheros  y directorios de la carpeta actual.
+
+for FICHERO in ~/* ; do
+	if [ -d $FICHERO ]; then
+		echo -n "el tamaño del directorio es "
+		du -sh $FICHERO
+	fi
+	if [ -f $FICHERO ]; then
+		echo -n "El tamaño del archivo es $FICHERO "
+		stat -c %s $FICHERO
+	fi
+done
+
+#4 forma del bucle for. uso de parametros posicionales
+for PARAMETRO ; do
+	echo "el valor del parametro es $PARAMETRO"
+done
+
+echo "fin del bucle con parametros"
+echo "-----------------------------------------"
+
+for USUARIO in ${USUARIOS[@]} ; do
+	echo "EL siguiente elemento del array es $USUARIO"
+done
+
+echo "fin del recorrido del array con el bucle for"
+echo "-----------------------------------------"
+
+
+echo "usamos expansión de comando para generar la lista"
+
+ARC_COMP=$(find /usr/share/doc/ -name "*gz" -size +1M  -print)
+echo "se visualiza todos los archivos comprimidos que cuelga de /usr/share/doc"
+for ARCHIVO in $ARC_COMP ; do
+	echo "El archivo es $ARCHIVO"
+# se podria descomprimir con gzip
+done
+
+exit 0

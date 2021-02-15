@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Descripción:	Script que ricibe como parametro un directorio
+#	Si no se pasa se emplea por defecto el directorio personal del usuario que ejecuta el script
+#	Pa cada archivo del direcotorio hay que desglosar el nombre del archivo y su ubicacion
+
+echo "--------------------EXTRAER SUBCADENAS---------------"
+# ${var#patron} Elimina la coincidencia mas corta del patron desde el comienzo de VAR
+# ${VAR##PATRON} elimina la coincidencia mas larga de patron desde el comienzo de var
+# ${var%patron} Elimina la coincidencia mas corta del patron desde el final de VAR
+# ${VAr%%PATRON} elimina la coincidencia mas larga de patron desde el final de var
+
+DIRECTORIO=$1
+echo "Directorio el trabajo es ${DIRECTORIO:=$HOME}"
+
+for ARCHIVO in $DIRECTORIO/* ; do
+	if [ -f "$ARCHIVO" ]; then
+		echo " inspeccionando $ARCHIVO"
+		NOMBRE=${ARCHIVO##*/}
+		UBICACION=${ARCHIVO%/*}
+		echo "El nombre del archivo es $NOMBRE y la ubicación $UBICACION"
+
+		echo "-------------------------------------------------------"
+	fi
+
+done
+
+
+
+
+
+
+exit 0
+

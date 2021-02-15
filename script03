@@ -1,0 +1,21 @@
+#!/bin/bash
+
+clear
+
+# Visualizamos el nombre de la cuenta de usuario
+
+echo "El usuario que ha abierto sesion es $USER"
+
+echo "El nombre completo es  $LOGNAME"
+
+echo " El directorio actual es $PWD"
+cd /usr/share
+echo "el directorio actual es $PWD"
+
+echo "El nombre del host es $HOSTNAME"
+
+cd $HOME/Documentos
+echo "El nuevo directorio activo es $PWD"
+echo "El anterior directorio activo era $OLDPWD"
+
+echo "El número de linea es $LINENO"

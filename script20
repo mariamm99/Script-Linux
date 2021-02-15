@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Descripción:	Script que leea los usuarios /etc/passwd y visualiza los campos 
+#		individuales de cada usuario. Los usuarios tiene que ser estandar
+#		Al final visualizar cuantos usuarios estándar hay
+
+
+
+ARCHIVO=/etc/passwd
+# ifs es una variable del sistema sin valor, indica lo que tomará de refencia de separador
+IFS=:
+
+let CUENTAS_ESTANDAR=0
+let CUENTAS_TOTALES=0
+
+while read USUARIO CLAVE ID_USUARIO ID_GRUPO NOMBRE DIR_HOME INTERPRETE; do
+
+	if [ ${ID_USUARIO} -ge 1000 -a ${ID_USUARIO} -le 29999 ]; then
+	echo "usuario: $USUARIO"
+	echo "Identificador: ${ID_USUARIO}"
+	echo "Grupo principal: ${ID_GRUPO}"
+	echo "el resto de grupos del usuario"
+	id -Gn $USUARIO
+	echo "Nombre completo: $NOMBRE"
+	echo "Directorio personal: ${DIR_HOME}"
+	echo "Interprete por defecto $INTERPRETE"
+	let ++CUENTAS_ESTANDAR
+else
+	echo "El usuario $USUARIO no es una cuenta del sistema" 
+fi
+echo "----------------------------------------"
+let ++CUENTAS_TOTALES
+
+done < $ARCHIVO
+
+echo "FIn de la base de datos de usuarios!"
+echo "Hay ${CUENTAS_TOTALES} usuarios y ${CUENTAS_ESTANDAR} correspoden a cuentas estándar"
+
+
+
+exit 0
+

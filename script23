@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# Descripción:	Script que lee los usuarios de /eetc/passwd e indique si el 
+#		usario en persona fisica, usuario del sistema o aplicaciones
+#		y servicio (info)
+
+#		Si el usuario es persona física indicar si falta algun dato
+#	relevante para que abra sesión: NO exste el directorio(warning)
+#	esta bloqueado (ERror) o le falta contraseña (warning)
+#		Si el usuario es del sistema visualizar su descripción(INFO)
+#	volcar toda la info en un archivo .log con el mismo nombre que el script
+#	Este archivo acumula todas las ejecucuiones que hagan el script y las
+#	diferncia con una cabecera de la fecha y hora en que se ejecuta script
+
+ARCHIVO_LOG=$0.log
+
+if [ ! -e ${ARCHIVO_LOG} ]; then
+	touch {$ARCHIVO_LOG}
+fi
+
+echo -n "inicio de la ejecucion " | tee -a ${ARCHIVO_LOG}
+date +'%d/%m/%Y %H:%M:%S' | tee -a ${ARCHIVO_LOG}
+echo "------------------------------------------"| tee -a ${ARCHIVO_LOG}
+
+IFS=:
+while read USUARIO CLAVE ID_U ID_G NOMBRE DIR_HOME INTERPRETE; do
+
+	if [ ${ID_U} -ge 1000 -a ${ID_U} -lt 30000 ]; then
+	#id usuario estandar
+
+		if [ ! -e $DIR_HOME ]; then
+			echo "warning: $USUARIO no tiene directorio personal" | tee -a ${ACHIVO_LOG}
+		else
+			echo "Info: la carpeta personal de $USUARIO es $DIR_HOME"
+		fi
+
+	ESTADO_CLAVE=$(passwd --status $USUARIO | cut -d ' ' -f 2)
+		if [ "${ESTADO_CLAVE}" = "L" ]; then
+			echo "Error: el usuario $USUARIO tiene la cuenta bloqueada" | tee -a ${ARCHIVO_LOG}
+		elif [ "${ESTADO_CLAVE}" = "NP" ]; then
+			echo "error: el usuario $USUARIO no tiene contraseña"  | tee -a ${ARCHIVO_LOG}
+		else
+			echo "Info: EL usuario $USUARIO tiene clave y no esta bloqueado"  | tee -a ${ARCHIVO_LOG}
+		fi
+
+	elif [ ${ID_U} -eq 0 ]; then
+	#id root
+	echo "info: usuario root" | tee -a ${ARCHIVO_LOG}
+
+	elif [ ${ID_U} -eq 65534 ]; then
+	#id nobody
+	echo "info: usuario nobody" | tee -a ${ARCHIVO_LOG}
+
+	elif [ ${ID_U} -ge 1 -a  ${ID_U} -lt 100 ]; then
+	#id usuario de sistema
+	echo "Info: Usuario del sistema $NOMBRE" | tee -a ${ARCHIVO_LOG}
+
+	elif [ ${ID_U} -ge 100 -a  ${ID_U} -lt 1000 ]; then
+	#usuario aplicaciones y servicios
+	echo "Info de usuarios de aplicaciones o servicios $NOMBRE" | tee -a ${ARCHIVO_LOG}
+
+	else
+	#cuentas reservadas
+	echo "info: cuentas reservadas $NOMBRE" | tee -a ${ARCHIVO_LOG}
+
+	fi
+
+done < /etc/passwd
+
+echo -n "Fin de la ejecucion" | tee -a ${ARCHIVO_LOG}
+echo "------------------------------------------------------"
+
+exit 0
+

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+ # Descripción: Las variables de entorno exportadas se emplean aqui
+
+echo " La VBLE_EXP1 es $VBLE_EXP1"
+echo " La VBLE_EXP2 es $VBLE_EXP2"
+echo " La VBLE_EXP3 es $VBLE_EXP3"
+
+

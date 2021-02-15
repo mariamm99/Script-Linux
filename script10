@@ -1,0 +1,44 @@
+#!/bin/bash
+
+#DESCRIPCION : Uso de arrays
+
+#Fromas de crear ararys 
+#	1. Asigranar valores directmanete a sus elementos
+
+NUMEROS[5]=90
+NUMEROS[14]=17
+NUMEROS[8]=21
+
+echo " El elemento 5 es ${NUMEROS[5]}"
+echo " El elemento 8 es ${NUMEROS[8]}"
+echo " El elemento 14 es ${NUMEROS[14]}"
+echo " El elemento 3 es ${NUMEROS[3]}"
+
+#Muesro todos los elementos del array
+echo " ${NUMEROS[*]}"
+echo " ${NUMEROS[@]}"
+
+#declaro el array asignado tods sus valores de golpe
+LETRAS=(a b c d e)
+echo " EL elemento 0 es ${LETRAS[0]}"
+echo " EL elemento 1 es ${LETRAS[1]}"
+echo " EL elemento 2 es ${LETRAS[2]}"
+echo " Todos los elementos  ${LETRAS[*]}"
+
+
+LETRAS=([9]=i [23]=z [20]=v)
+echo " EL elemento 9 es ${LETRAS[9]}"
+
+echo " Todos los elementos  ${LETRAS[*]}"
+
+
+ALFABETO=( {a..z} )
+echo " EL elemento 2 es ${ALFABETO[2]}"
+echo " EL elemento 5 es ${ALFABETO[5]}"
+echo " Todos los elementos  ${ALFABETO[*]}"
+echo " El numero de elementos del array es   ${#ALFABETO[*]}"
+
+#recorrer todos los elementos de array con un bucle for 
+for LETRA in ${ALFABETO[@]}; do
+echo "la letra es $LETRA"
+done

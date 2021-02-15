@@ -1,0 +1,43 @@
+#!/bin/bash
+
+#DESCRIPCION = expresiones condicionales de comparativa de numeros y cadenas
+
+#$# indica numero de valores que pasass
+
+if test $# -gt 0; then
+	echo "se han pasado $# parametros"
+	echo "los parametros son : $@"
+else
+	echo "no se ha pasado ningún parametro"
+fi
+
+ls $1 2>/dev/null
+if [ $? -ne 0 ]; then
+	echo " error en al ejecutar ls $1"
+fi
+
+echo "expresion comparativa de cadena 1 "
+echo "----------------------------------------"
+if [ $1 == "uno" ]; then 
+echo "el primer parametro pasado es uno"
+fi
+
+echo "----------------------------------------"
+echo "expresion comparativa de cadena 2"
+if [ -z $2 ]; then
+	echo "El segundo aparmetro no se ha pasado"
+fi
+
+echo "----------------------------------------"
+echo "expresion comparativa de cadena 3"
+if [ -n "$2" ]; then
+	echo "El segundo parametro tiene valor $2"
+fi
+
+echo "----------------------------------------"
+echo "expresion comparativa de cadena 4"
+if [ "$2" ]; then
+	echo "el segundo parametro tiene valor $2"
+fi
+
+exit 0

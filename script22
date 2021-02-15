@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# Descripción:	script que presenta un menú con las siguientes opciones  
+#		1-> nombre del host
+#		2 -> NOmbre del kernel
+#		3-> Versión del kernel
+#		4-> sistema operativo
+#		5 -> plataforma hardware
+#		6-> Fin 
+#	visualizar la información asociada a cada opcion
+
+PS3="Información del sistema. eliga la opción ->"
+select OPCION in 'nombre del host' 'nombre del kernel' 'version del kernel' SO HW fin ; do
+
+echo "la opcion elegida es $OPCION"
+
+if [ "$OPCION" = "fin" ] ; then
+	break;
+fi
+
+if [ "$OPCION" = "nombre del host" ] || [ "$OPCION" = "nombre del kernel" ] || [ "$OPCION" = "version del kernel" ] || [ "$OPCION" = "SO" ] || [ "$OPCION" = "HW" ] || [ "$OPCION" = "fin" ] ; then
+
+	case $OPCION in
+		"nombre del host")
+			echo -n "el nombre del host es"
+			hostname
+		;;
+
+		"nombre del kernel")
+			echo -n "El nombre del kernel es"
+			uname -s
+		;;
+		"version del kernel")
+			echo -n "La versión del kernel es "
+			uname -v
+		;;
+
+		"SO")
+			echo -n " El sistema operativo es "
+			uname -o
+		;;
+
+		"HW")
+			echo -n " La plataforma hardware"
+			uname -i
+		;;
+		"fin")
+			echo -n " final del bucle select"
+			break
+		;;
+	esac
+fi
+done
+exit 1

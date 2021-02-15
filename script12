@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#descripcion: estructura condicional simple. de tipo fiichero
+
+#comprobar si el fichero pasado como parametro existe
+#fichero podemos comparar tipo, permisos y fechas se escribe con -e fichero
+
+#if <expresion condicional>; then
+
+if test -e $1 ; then
+	echo "el fichero $1 existe"
+else
+	echo  " el fichero $1 no existe"
+fi
+
+DIRECTORIO=/home/maria
+if [ -d $DIRECTORIO ]; then
+	echo "$DIRECTORIO existe y es un directorio"
+else
+	echo "$DIRECTORIO no es un directrio o no existe"
+fi
+
+if [ -f $0 ]; then 
+	echo "$0 es un fichero regular"
+fi
+
+
+if [ -b /dev/sda ]; then
+	echo "el archivo /dev/sda es un archivo de dispositivo por bloques"
+fi

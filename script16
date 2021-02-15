@@ -1,0 +1,55 @@
+#!/bin/bash
+
+#DESCRIPCION = 	uso de la estructura selectiva múltiple case.
+#		Pasar 2 parametros: un archivo y un codigo de operación según
+#		el siguiente esquema:
+#		[B]orrar ,[v]isualizar [L]istar,  [I]nformación del archivo.
+
+if [ $# -ne 2 ]; then
+	echo " Error no se han pasado parametros";
+	echo "sintaxis: $0 <archivo>  {b|B|v|V|l|L|I|i}"
+	exit 1
+fi
+
+if [ ! -e $1 ]; then
+	echo "$1 no es un nombre de archivo valido "
+	exit 2
+fi
+
+if [ ! -r $1 ]; then
+	echo "$1 no es un archivo regular"
+	exit 3
+fi
+
+case $2 in
+	(B|b)
+		echo "borrar el archivo $1"
+		read -p "desea borrar el archivo $1? [s|n]" CONFIRMA_BORRADO
+		if [ "$CONFIRMA_BORRADO" == "S" -o "$CONFIRMA_BORRADO" == "s" ];then
+			if [ -w $1 ]; then
+				echo "Borrando $1"
+				rm $1
+			else
+				echo "1. Error en el borrado. No dispone de permisos para borrarlo"
+			fi
+
+			rm -f $1 2>/dev/null
+			if [ $? -ne 0 ]; then
+				echo "2. Error en el borrado no dispone de permios para borrarlo"
+			fi
+		fi
+	;;
+
+	(V|v)
+		echo "Visualizando el arvhivo $1"
+		if [ -r ]; then
+			cat $1
+		else
+			echo "error al ver. no tiene permisos"
+		fi
+	;;
+esac
+exit 0
+
+
+#;; cierra el [b|B]

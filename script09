@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#DESCRIPCION: variable con tipo
+
+declare -i NUMERO=4
+echo "EL valor de NUMERO es $NUMERO"
+
+NUMERO=8
+echo "EL valor de NUMERO es $NUMERO"
+
+#NUMERO=nuevo
+#echo "EL valor de NUMERO es $NUMERO"
+
+NUMERO=$NUMERO*2/5
+echo "EL valor de NUMERO es $NUMERO"
+
+exit 0

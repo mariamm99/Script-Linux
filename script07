@@ -1,0 +1,24 @@
+#!/bin/bash
+# DESCRIPCION: Variables especiales
+echo = " Variables especiales"
+echo = "-----------------------------"
+
+echo " El identificador de proceso de $0 es $$"
+
+echo "El numero de parametros que se han pasado es $#"
+
+echo "Mostramos todos los aprametros"
+echo "$*"
+echo "$@"
+
+#para cambiar el separador de valores $@
+
+IFS=","
+echo "$*"
+echo "$@"
+
+#Codigo de salida del último comando ejectuda
+tar -cvzf $HOME/$1.tar.gz $1 2> /dev/null
+echo "$1 el valor es 0, el empaquetado ha tenido exito $?"
+
+ls -ld $HOME/$1.tar.gz
